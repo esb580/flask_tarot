@@ -34,7 +34,7 @@ def select_cards(deck, num_cards):
     for card in selected_cards:
         orientation = "upright" if random.randint(0, 1) == 0 else "reversed"
         card["orientation"] = orientation.capitalize()
-        card["image_url"] = base_url + "img/" + orientation + "/" + card["card_image"]
+        card["image_url"] = "/img/" + orientation + "/" + card["card_image"]
 
         if orientation == "upright":
             card.pop("card_meaning_reversed", None)
