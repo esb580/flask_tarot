@@ -1,26 +1,39 @@
 from flask import Flask, jsonify
 import random
 import json
+import copy
 
 app = Flask(__name__)
 
 # Load the tarot deck from pack.json
 with open('pack.json', 'r') as f:
-    tarot_deck = json.load(f)
+    tarot_deck = json.load(f)["pack"]  # Access the list inside the dictionary
 
 # Shuffle the deck
 def shuffle_deck():
-    shuffled_deck = tarot_deck.copy()
+    shuffled_deck = copy.deepcopy(tarot_deck)
     random.shuffle(shuffled_deck)
     return shuffled_deck
 
 # Select cards from the shuffled deck
 def select_cards(deck, num_cards):
+    #print(deck)
+    # Ensure num_cards is an integer
+    if not isinstance(num_cards, int):
+        raise ValueError("num_cards must be an integer")
+
+    print(num_cards)
+    print(len(deck))
+
+    # Ensure num_cards is not greater than the length of the deck and is not negative
+    if num_cards > len(deck) or num_cards < 0:
+        raise ValueError("num_cards must be less than or equal to the length of the deck and must not be negative")
     selected_cards = random.sample(deck, num_cards)
-    base_url = "http://<your-host-ip>:8080/img/"
+    base_url = "http://<your-host-ip>:8080/"
     for card in selected_cards:
-        card["orientation"] = "Upright" if random.randint(0, 1) == 0 else "Reversed"
-        card["image_url"] = base_url + card["card_image"]
+        orientation = "upright" if random.randint(0, 1) == 0 else "reversed"
+        card["orientation"] = orientation.capitalize()
+        card["image_url"] = base_url + "img/" + orientation + "/" + card["card_image"]
         card.pop("card_meaning_upright", None)
         card.pop("card_meaning_reversed", None)
         card.pop("card_description_upright", None)

@@ -1,20 +1,28 @@
-# Tarot Card Reading API
+# Flask Tarot API
 
-This project is a simple Flask API that provides tarot card readings. It uses a JSON file as a database for the tarot cards and their meanings.
+This is a Flask application that provides a Tarot card reading API. The application uses a JSON file to load a Tarot deck and provides two API endpoints for different types of readings.
 
-## Getting Started
+## API Endpoints
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+### 3 Card Reading
 
-### Prerequisites
+**Endpoint:** `/tarot/3card`
 
-- Python 3.6 or higher
-- Flask
+**Method:** `GET`
 
-### Installation
+**Description:** This endpoint returns a 3 card Tarot reading. The cards are selected randomly from the deck and each card can be either upright or reversed.
 
-1. Clone the repository to your local machine.
-2. Install the required packages using pip:
+### 5 Card Reading
+
+**Endpoint:** `/tarot/5card`
+
+**Method:** `GET`
+
+**Description:** This endpoint returns a 5 card Tarot reading. The cards are selected randomly from the deck and each card can be either upright or reversed.
+
+## Setup
+
+To set up the application, first install the required Python packages:
 
 ```bash
 pip install -r requirements.txt
