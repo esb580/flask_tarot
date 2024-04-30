@@ -1,3 +1,14 @@
+"""
+app.py
+
+Description: This file contains the main application logic for the Tarot card reading web service.
+It includes routes for getting 3-card and 5-card readings.
+
+Author: esb580
+Created: 4/29/2024
+Last Modified: 4/29/2024
+
+"""
 from flask import Flask, jsonify
 import random
 import json
