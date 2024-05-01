@@ -10,10 +10,13 @@
         {% for card in cards %}
         <div class="card">
             <img src="{{ card.image_url }}" alt="{{ card.card_image }}">
-            <h2>{{ card.card_name }}</h2>
-            <p>{{ card.card_description_upright if card.orientation == 'upright' else card.card_description_reversed }}</p>
+            <h2>{{ card.card_name  }} - {{ card.card_number }}</h2>
+            <p><b>Brief:</b> {{ card.card_meaning_upright if card.orientation == 'upright' else card.card_meaning_reversed }}</p>
+            <hr/>
+            <p><b>Description:</b> {{ card.card_description_upright if card.orientation == 'upright' else card.card_description_reversed }}</p>
         </div>
         {% endfor %}
     </div>
+    <a href="{{ url_for('3card_reading') }}">Get Another Reading</a>
 </body>
 </html>
