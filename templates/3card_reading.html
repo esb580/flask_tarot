@@ -10,7 +10,7 @@
         {% for card in cards %}
         <div class="card">
             <img src="{{ card.image_url }}" alt="{{ card.card_image }}">
-            <h2>{{ card.card_name }}  {{ card.orientation }}</h2>
+            <h2>{{ card.card_name }}</h2>
             <p>{{ card.card_description_upright if card.orientation == 'upright' else card.card_description_reversed }}</p>
         </div>
         {% endfor %}
