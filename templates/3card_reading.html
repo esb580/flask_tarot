@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3 Card Tarot Reading</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <h1>3 Card Tarot Reading</h1>
+    <div id="cards">
+        {% for card in cards %}
+        <div class="card">
+            <img src="{{ card.image_url }}" alt="{{ card.card_image }}">
+            <h2>{{ card.card_name }}  {{ card.orientation }}</h2>
+            <p>{{ card.card_description_upright if card.orientation == 'upright' else card.card_description_reversed }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

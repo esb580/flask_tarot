@@ -10,6 +10,7 @@ Last Modified: 4/29/2024
 
 """
 from flask import Flask, jsonify
+from flask import render_template
 import random
 import json
 import copy
@@ -22,8 +23,20 @@ with open('pack.json', 'r') as f:
 
 
 # Shuffle the deck
-def shuffle_deck():
-    shuffled_deck = copy.deepcopy(tarot_deck)
+def shuffle_deck(spread="3card"):
+    # Ensure spread is a string
+    if not isinstance(spread, str):
+        raise ValueError("spread must be a string")
+
+    # Only take the first 22 cards if the is for 3card reading
+    if spread == "3card":
+        shuffled_deck = copy.deepcopy(tarot_deck[:22])
+    # Take all 78 cards if the spread is for 5card reading
+    elif spread == "5card":
+        shuffled_deck = copy.deepcopy(tarot_deck)
+    else:
+        raise ValueError("spread must be either '3card' or '5card'")
+
     random.shuffle(shuffled_deck)
     return shuffled_deck
 
@@ -34,17 +47,17 @@ def select_cards(deck, num_cards):
     if not isinstance(num_cards, int):
         raise ValueError("num_cards must be an integer")
 
-    print(num_cards)
-    print(len(deck))
+    print("The deck has " + str(len(deck)) + " cards in it.")
+    print("Drawing " + str(num_cards) + " cards from the deck...")
 
     # Ensure num_cards is not greater than the length of the deck and is not negative
     if num_cards > len(deck) or num_cards < 0:
         raise ValueError("num_cards must be less than or equal to the length of the deck and must not be negative")
     selected_cards = random.sample(deck, num_cards)
-    base_url = "http://<your-host-ip>:8080/"
+    # base_url = "http://<your-host-ip>:8080/"
     for card in selected_cards:
         orientation = "upright" if random.randint(0, 1) == 0 else "reversed"
-        card["orientation"] = orientation.capitalize()
+        card["orientation"] = orientation
         card["image_url"] = "/img/" + orientation + "/" + card["card_image"]
 
         if orientation == "upright":
@@ -54,22 +67,34 @@ def select_cards(deck, num_cards):
             card.pop("card_meaning_upright", None)
             card.pop("card_description_upright", None)
 
-        card.pop("card_image", None)
     return selected_cards
 
 
-@app.route('/tarot/3card', methods=['GET'])
+@app.route('/tarot/api/3card', methods=['GET'])
 def get_3card_reading():
-    shuffled_deck = shuffle_deck()
+    shuffled_deck = shuffle_deck('3card')
     selected_cards = select_cards(shuffled_deck, 3)
     return jsonify(selected_cards)
 
 
-@app.route('/tarot/5card', methods=['GET'])
+@app.route('/tarot/api/5card', methods=['GET'])
 def get_5card_reading():
-    shuffled_deck = shuffle_deck()
+    shuffled_deck = shuffle_deck('5card')
     selected_cards = select_cards(shuffled_deck, 5)
     return jsonify(selected_cards)
+
+
+@app.route('/tarot/reading/3card', methods=['GET'])  # This route is for the web page
+def get_3card_reading_web():
+    shuffled_deck = shuffle_deck('3card')
+    selected_cards = select_cards(shuffled_deck, 3)
+    print(selected_cards)
+    return render_template('3card_reading.html', cards=selected_cards)
+
+
+@app.route('/img/<orientation>/<path:filename>')
+def get_image(orientation, filename):
+    return app.send_static_file("img/" + orientation + "/" + filename)
 
 
 if __name__ == '__main__':
