@@ -97,6 +97,15 @@ def get_3card_reading_web():
     return render_template('3card_reading.html', reading=html_reading, cards=selected_cards)
 
 
+@app.route('/tarot/reading/5card', methods=['GET'])  # This route is for the web page
+def get_5card_reading_web():
+    shuffled_deck = shuffle_deck('5card')
+    selected_cards = select_cards(shuffled_deck, 5)
+    ai_reading = get_interpretation(selected_cards, "5card")
+    html_reading = markdown.markdown(ai_reading)
+    return render_template('5card_reading.html', reading=html_reading, cards=selected_cards)
+
+
 @app.route('/img/<orientation>/<path:filename>')
 def get_image(orientation, filename):
     return app.send_static_file("img/" + orientation + "/" + filename)

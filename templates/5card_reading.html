@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>5 Card Tarot Reading</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+        #cards {
+            display: grid;
+            grid-template-areas:
+                ". card4 ."
+                "card3 card1 card5"
+                ". card2 .";
+            justify-items: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .card:nth-child(1) { grid-area: card1; }
+        .card:nth-child(2) { grid-area: card2; }
+        .card:nth-child(3) { grid-area: card3; }
+        .card:nth-child(4) { grid-area: card4; }
+        .card:nth-child(5) { grid-area: card5; }
+    </style>
+</head>
+<body>
+    <h1>5 Card Tarot Reading</h1>
+    <div id="cards">
+        {% for card in cards %}
+        <div class="card">
+            <img src="{{ card.image_url }}" alt="{{ card.card_image }}">
+            <h2>{{ card.card_name  }} - {{ card.card_number }}</h2>
+            <p><b>Brief:</b> {{ card.card_meaning_upright if card.orientation == 'upright' else card.card_meaning_reversed }}</p>
+            <hr/>
+            <p><b>Description:</b> {{ card.card_description_upright if card.orientation == 'upright' else card.card_description_reversed }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div style="margin-left: 30px;">
+        {{ reading|safe }}
+    </div>
+</body>
+</html>
