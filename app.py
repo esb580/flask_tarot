@@ -14,6 +14,7 @@ from flask import render_template
 import random
 import json
 import copy
+import markdown
 from flask_tarot_gen import get_interpretation
 
 app = Flask(__name__)
@@ -68,6 +69,8 @@ def select_cards(deck, num_cards):
             card.pop("card_meaning_upright", None)
             card.pop("card_description_upright", None)
 
+        print("Selected card: " + card["card_name"] + " - " + orientation)
+
     return selected_cards
 
 
@@ -89,9 +92,9 @@ def get_5card_reading():
 def get_3card_reading_web():
     shuffled_deck = shuffle_deck('3card')
     selected_cards = select_cards(shuffled_deck, 3)
-    print(selected_cards)
     ai_reading = get_interpretation(selected_cards, "3card")
-    return render_template('3card_reading.html', reading=ai_reading, cards=selected_cards)
+    html_reading = markdown.markdown(ai_reading)
+    return render_template('3card_reading.html', reading=html_reading, cards=selected_cards)
 
 
 @app.route('/img/<orientation>/<path:filename>')

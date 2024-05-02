@@ -1,10 +1,14 @@
-# a function library that uses the google-generitiveai to provide
-# interpretations of selected cards. the functions should receive the selected
-# cards from app.py and the same type of spread used in the shuffled_deck
-# function. the library functions should return text from the google api response.
-# pick a model well suited for development and text based input and output,
-# which will be least likely to incurr charges but be effective in answering
-# my tarot questions
+"""
+flask_tarot_gen.py
+
+Description: This file contains the logic for generating tarot card readings using the Google Generative AI model.
+It includes a function for getting the interpretation of selected cards based on the spread type.
+
+Author: esb580
+Created: 4/29/2024
+Last Modified: 4/29/2024
+
+"""
 import os
 import google.generativeai as genai
 
@@ -20,6 +24,7 @@ genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 
 model = genai.GenerativeModel('gemini-1.0-pro-latest')
 # response = model.generate_content("The opposite of hot is")
+
 
 def get_interpretation(cards, spread):
     if spread == "3card":
@@ -42,13 +47,12 @@ def get_interpretation(cards, spread):
         raise ValueError("cards must not be empty")
 
     # Get the card names with numbers
-    card_names = [f"{i+1}. {card['card_name']}" for i, card in enumerate(cards)]
+    card_names = [f"{i+1}. {card['card_name']} - {card['orientation']}" for i, card in enumerate(cards)]
 
     # Generate the content
     content = "Using " + the_spread + " tarot spread with standard conventions, please give a reading: " + ", ".join(card_names)
     response = model.generate_content(content)
-    print(response)
-    return response
+    return response.text
 
 
 
