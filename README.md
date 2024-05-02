@@ -2,6 +2,13 @@
 
 This Flask application provides a Tarot card reading API and web interface. It uses a JSON file to load a Tarot deck and provides two API endpoints and corresponding web pages for different types of readings. The application also includes a feature to convert the AI-generated reading from Markdown to HTML and display it on the web page with proper indentation.
 
+## Prerequisites
+1. .env containing your API key for Gemini
+2. static/img/reversed/*.gif, static/img/upright/*.gif
+   - tarot images upside down and right side up
+   - 78 images total, excluded to avoid copyright issues
+   - see pack.json for image names
+
 ## API Endpoints
 
 ### 3 Card Reading
