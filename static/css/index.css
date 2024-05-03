@@ -1,0 +1,16 @@
+/* main.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 30px;
+    color: #333;
+    margin-left: 30px;
+}
+
+h1 {
+    text-align: center;
+    background: purple;
+    color: white;
+}

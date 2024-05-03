@@ -106,10 +106,15 @@ def get_5card_reading_web():
     return render_template('5card_reading.html', reading=html_reading, cards=selected_cards)
 
 
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
+
+
 @app.route('/img/<orientation>/<path:filename>')
 def get_image(orientation, filename):
     return app.send_static_file("img/" + orientation + "/" + filename)
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=80)

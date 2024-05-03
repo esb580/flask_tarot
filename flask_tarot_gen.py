@@ -32,7 +32,7 @@ def get_interpretation(cards, spread):
     elif spread == "5card":
         the_spread = "a five-card"
     else:
-        raise ValueError("spread must be either '3card' or '5card")
+        raise ValueError("spread must be either '3card' or '5card'")
 
     # Ensure cards is a list
     if not isinstance(cards, list):
