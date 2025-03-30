@@ -22,7 +22,8 @@ print("Google API Key: " + os.getenv('GOOGLE_API_KEY'))
 # Configure the API key
 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 
-model = genai.GenerativeModel('gemini-1.0-pro-latest')
+# model = genai.GenerativeModel('gemini-1.0-pro-latest')
+model = genai.GenerativeModel('gemini-2.0-flash')
 # response = model.generate_content("The opposite of hot is")
 
 
