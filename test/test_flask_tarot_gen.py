@@ -6,7 +6,7 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
-from flask_tarot_gen_2_0 import get_interpretation
+from flask_tarot_gen import get_interpretation
 
 def test_tarot_reading():
     test_cards = [

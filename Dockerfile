@@ -1,17 +1,35 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-bookworm
+FROM python:3.9-slim-bookworm
 
-# Set the working directory in the container to /app
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=random
+
+# Create a non-root user
+RUN groupadd -r tarot && useradd -r -g tarot tarot
+
+# Set the working directory in the container
 WORKDIR /app
 
-# Add the current directory contents into the container at /app
-ADD . /app
+# Copy requirements first for better cache utilization
+COPY requirements.txt .
 
-# Install any needed packages specified in requirements.txt
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Make port 8080 available to the world outside this container
+# Copy the application
+COPY . .
+
+# Create necessary directories and set permissions
+RUN mkdir -p /app/static/img && \
+    chown -R tarot:tarot /app
+
+# Switch to non-root user
+USER tarot
+
+# Make port 80 available
 EXPOSE 80
 
-# Run app.py when the container launches
+# Run app_2.0.py when the container launches
 CMD ["python", "app.py"]
