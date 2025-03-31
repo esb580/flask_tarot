@@ -1,5 +1,5 @@
 """
-flask_tarot_gen_2_0.py
+flask_tarot_gen.py
 
 Description: This file contains the logic for generating tarot card readings using Google's Generative AI.
 Uses google-genai library for improved performance and features.

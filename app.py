@@ -1,5 +1,5 @@
 """
-app1.py
+app.py
 
 Description: Enhanced version of the Tarot card reading web service with cryptographic randomness.
 It includes routes for getting 3-card and 5-card readings.

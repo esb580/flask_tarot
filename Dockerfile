@@ -31,5 +31,5 @@ USER tarot
 # Make port 80 available
 EXPOSE 80
 
-# Run app_2.0.py when the container launches
+# Run app.py when the container launches
 CMD ["python", "app.py"]
