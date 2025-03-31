@@ -18,7 +18,7 @@ import markdown
 import os
 import hashlib
 import time
-from flask_tarot_gen import get_interpretation
+from flask_tarot_gen_2_0 import get_interpretation
 
 app = Flask(__name__)
 
